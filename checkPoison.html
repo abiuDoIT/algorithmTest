@@ -1,0 +1,46 @@
+<html>
+  <h2>题目出自   https://www.v2ex.com/t/771969</h2>
+  <h2>这个页面是用来验证答案的，共六行对应六只老鼠。每一行格式为八位bit,对应该老鼠有没有喝第n瓶药</h1>
+  <body>
+    <textarea id="mat" rows="10" cols="30" style="font-size: large;"  ></textarea>
+
+    <button onclick="check()">check</button>
+    <div id="info"></div>
+  </body>
+  <script>
+    function init(){
+      document.querySelector("#mat").value = `00000000\n00000000\n00000000\n00000000\n00000000\n00000000\n`
+    }
+    init()
+    function check(){
+      let mat = document.querySelector("#mat").value;
+      mat = mat.split(/[\n\r]+/).filter(v=>v).map(row=>{
+
+        return parseInt(row.replace(/\s+/g,''),2);
+      });
+      console.log(mat);
+      function getDieResult(i,j){
+        const p = (1<<i) | (1<<j)
+        return mat.map(v=>(v&p)==0?'0':'1').join('')
+
+      }
+      console.log(mat);
+      const existMap = {};
+      for(let i=0;i<8;i++){
+        for(let j=i+1;j<8;j++){
+          const r = getDieResult(i,j);
+          const info = `${i},${j}`;
+          if(existMap[r]){
+            showInfo(`失败,毒药 ${existMap[r]} and ${info} 存在相同死亡情况`)
+            return;
+          }
+          existMap[r] = info;
+        }
+      }
+      showInfo('成功');
+    }
+    function showInfo(info){
+      document.querySelector("#info").innerHTML = info;
+    }
+  </script>
+</html>
