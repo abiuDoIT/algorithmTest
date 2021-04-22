@@ -4,7 +4,7 @@
   <body>
     <textarea id="mat" rows="10" cols="30" style="font-size: large;"  ></textarea>
 
-    <button onclick="check()">check</button>
+    <button onclick="check()" style="font-size: 20px;">check</button>
     <div id="info"></div>
   </body>
   <script>
@@ -31,7 +31,7 @@
           const r = getDieResult(i,j);
           const info = `${i},${j}`;
           if(existMap[r]){
-            showInfo(`失败,毒药 ${existMap[r]} and ${info} 存在相同死亡情况`)
+            showInfo(`失败,毒药 ${existMap[r]} 和 ${info} 存在相同死亡情况: ${r}`)
             return;
           }
           existMap[r] = info;
